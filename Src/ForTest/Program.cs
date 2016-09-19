@@ -34,13 +34,6 @@ namespace ForTest
             #endregion
 
             #region 密碼
-            ////Delta
-            //byte[] m_iV = { 137, 31, 78, 53, 59, 214, 111, 140 };
-            //byte[] m_key = { 104, 163, 34, 76, 160, 135, 196, 177 };
-
-            ////LkEncryptDecrypt.IV = m_iV;
-            ////LkEncryptDecrypt.Key = m_key;
-
             //LkEncryptDecrypt.IVStr = "lonka0915";
             //LkEncryptDecrypt.KeyStr = "clare1102";
             //string result;
