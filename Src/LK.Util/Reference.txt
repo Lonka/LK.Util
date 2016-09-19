@@ -1,0 +1,3 @@
+﻿Reference External Assemblies
+1. Gurock.SmartInspect(http://www.gurock.com/smartinspect/)
+2. SharpZipLib(http://www.icsharpcode.net/OpenSource/SharpZipLib/Default.aspx)

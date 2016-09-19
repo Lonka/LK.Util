@@ -1,0 +1,6 @@
+/Src/*.suo
+/Src/packages
+/Src/LK.Util/obj
+/Src/LK.Util/bin
+/Src/ForTest/obj
+/Src/ForTest/bin

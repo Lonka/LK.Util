@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4723C8B6-184B-4D33-B791-8443E2342946}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LK.Util</RootNamespace>
+    <AssemblyName>LK.Util</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Polenter.SharpSerializer">
+      <HintPath>..\packages\SharpSerializer.2.20\lib\net20\Polenter.SharpSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Calculator\LkCalculator.cs" />
+    <Compile Include="Calculator\JEval.cs" />
+    <Compile Include="Calculator\Model\LkParamInfo.cs" />
+    <Compile Include="Cmd\LkNetUse.cs" />
+    <Compile Include="Compress\LkCompress.cs" />
+    <Compile Include="Database\LkDAO.cs" />
+    <Compile Include="Database\Impl\Common\CommonDb.cs" />
+    <Compile Include="Database\Impl\Common\CommonDbInfo.cs" />
+    <Compile Include="Database\Impl\Common\CommonType.cs" />
+    <Compile Include="Database\IDatabase.cs" />
+    <Compile Include="Database\LkDAOInstance.cs" />
+    <Compile Include="Database\LkDbType.cs" />
+    <Compile Include="DataSerializer\LkDataSerializer.cs" />
+    <Compile Include="EncryptDecrypt\EncryptFactory\IEncrypt.cs" />
+    <Compile Include="EncryptDecrypt\EncryptFactory\MD5Encrypt.cs" />
+    <Compile Include="EncryptDecrypt\EncryptFactory\SHA1Encrypt.cs" />
+    <Compile Include="EncryptDecrypt\EncryptFactory\SHA256Encrypt.cs" />
+    <Compile Include="EncryptDecrypt\EncryptFactory\SHA384Encrypt.cs" />
+    <Compile Include="EncryptDecrypt\EncryptFactory\SHA512Encrypt.cs" />
+    <Compile Include="EncryptDecrypt\LkEncryptType.cs" />
+    <Compile Include="EncryptDecrypt\LkEncrypt.cs" />
+    <Compile Include="EncryptDecrypt\LkEncryptDecrypt.cs" />
+    <Compile Include="File\LkFile.cs" />
+    <Compile Include="Ini\LkIni.cs" />
+    <Compile Include="Log\Impl\File\Factory\CommonFileLog.cs" />
+    <Compile Include="Log\Impl\File\Factory\DeltaFileLog.cs" />
+    <Compile Include="Log\Impl\File\FileLogFactory.cs" />
+    <Compile Include="Log\ILogFactory.cs" />
+    <Compile Include="Log\LkLog.cs" />
+    <Compile Include="Log\Type\LogImplType.cs" />
+    <Compile Include="Log\Type\LogLevel.cs" />
+    <Compile Include="Log\LkLogParams.cs" />
+    <Compile Include="Log\LogProvide.cs" />
+    <Compile Include="Log\Type\LogType.cs" />
+    <Compile Include="Log\Model\Message.cs" />
+    <Compile Include="Log\Impl\File\Factory\ThreadFileLog.cs" />
+    <Compile Include="Mapper\LkMapper.cs" />
+    <Compile Include="Process\CloseThread.cs" />
+    <Compile Include="Process\LkProcess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflector\LkReflector.cs" />
+    <Compile Include="Reflector\Model\LkReflectInstance.cs" />
+    <Compile Include="Utilities\DateInterval.cs" />
+    <Compile Include="Utilities\LkCommonUtil.cs" />
+    <Compile Include="Utilities\LkDateUtil.cs" />
+    <Compile Include="Utilities\LkIntUtil.cs" />
+    <Compile Include="MessageBox\WebImpl\MsgBoxBtnImpl\WebMsgBoxBtnOk.cs" />
+    <Compile Include="MessageBox\WebImpl\WebMsgBox.cs" />
+    <Compile Include="MessageBox\WinFormImpl\MsgBoxBtnImpl\WinFormMsgBoxBtnAbortRetryIgnore.cs" />
+    <Compile Include="MessageBox\WinFormImpl\MsgBoxBtnImpl\WinFormMsgBoxBtnOk.cs" />
+    <Compile Include="MessageBox\WinFormImpl\MsgBoxBtnImpl\WinFormMsgBoxBtnOkCancel.cs" />
+    <Compile Include="MessageBox\WinFormImpl\MsgBoxBtnImpl\WinFormMsgBoxBtnRetryCancel.cs" />
+    <Compile Include="MessageBox\WinFormImpl\MsgBoxBtnImpl\WinFormMsgBoxBtnYesNo.cs" />
+    <Compile Include="MessageBox\WinFormImpl\MsgBoxBtnImpl\WinFormMsgBoxBtnYesNoCancel.cs" />
+    <Compile Include="MessageBox\WinFormImpl\WinFormMsgBox.cs" />
+    <Compile Include="MessageBox\IMsgBoxBtn.cs" />
+    <Compile Include="MessageBox\LkDialogResult.cs" />
+    <Compile Include="MessageBox\LkMessageBoxButtons.cs" />
+    <Compile Include="MessageBox\LkMsgBox.cs" />
+    <Compile Include="MessageBox\MessageModes.cs" />
+    <Compile Include="MessageBox\MsgBox.cs" />
+    <Compile Include="Utilities\LkStringUtil.cs" />
+    <Compile Include="Validation\LkValidation.cs" />
+    <Compile Include="Validation\RegularExp.cs" />
+    <Compile Include="Xml\LkParseXml.cs" />
+    <Compile Include="Xml\WhereOperator\Expression.cs" />
+    <Compile Include="Xml\WhereOperator\WhereLessThenEqual.cs" />
+    <Compile Include="Xml\WhereOperator\WhereGreaterThenEqual.cs" />
+    <Compile Include="Xml\WhereOperator\WhereLessThen.cs" />
+    <Compile Include="Xml\WhereOperator\WhereGreaterThen.cs" />
+    <Compile Include="Xml\WhereOperator\IOperator.cs" />
+    <Compile Include="Xml\LkXml.cs" />
+    <Compile Include="Xml\WhereCondition.cs" />
+    <Compile Include="Xml\WhereOperator\WhereEqual.cs" />
+    <Compile Include="Xml\WhereOperator\WhereLike.cs" />
+    <Compile Include="Xml\WhereMode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reference.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
