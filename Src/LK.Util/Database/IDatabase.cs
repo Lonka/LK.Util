@@ -13,7 +13,7 @@ namespace LK.Util
         DataTable GetDataTable(string strSQL);
         DataTable GetDataTable(string strSQL, List<DbParameter> parms);
         DataTable GetStoredProcedure(string spName, List<DbParameter> parms);
-        void ExecuteSQL(string strSQL);
-        void ExecuteSQL(string strSQL, List<DbParameter> parms);
+        void ExecuteSQL(string strSQL,bool isTransaction=true);
+        void ExecuteSQL(string strSQL, List<DbParameter> parms, bool isTransaction = true);
     }
 }

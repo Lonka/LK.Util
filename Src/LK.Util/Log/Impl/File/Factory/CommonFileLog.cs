@@ -15,7 +15,7 @@ namespace LK.Util
         {
             get
             {
-                return LkLog.LogParams.LogFile;
+                return LogParams.LogPath;
             }
         }
 
@@ -29,23 +29,27 @@ namespace LK.Util
             DeleteOverdueLog();
             if (CheckLevel(logLevel))
             {
-                DoWriteLog(GetFileName(logLevel,function)
+                DoWriteLog(GetFileName(logLevel, function)
                     , GetLogMsg(logLevel, function, msg));
             }
         }
 
         protected virtual void DeleteOverdueLog()
         {
-            if (LkLog.LogParams.LogRetentionDayCount <= 0)
+            if (LogParams.LogRetentionDayCount <= 0)
                 return;
             DirectoryInfo parentDir = new DirectoryInfo(m_filePath);
-            DirectoryInfo[] dirs = parentDir.GetDirectories();
-            DateTime dt = new DateTime();
-            foreach (DirectoryInfo dir in dirs)
+            if (parentDir.Exists)
             {
-                if (DateTime.TryParse(dir.Name, out dt) && DateTime.Now.Subtract(dt).Days >= LkLog.LogParams.LogRetentionDayCount)
+
+                DirectoryInfo[] dirs = parentDir.GetDirectories();
+                DateTime dt = new DateTime();
+                foreach (DirectoryInfo dir in dirs)
                 {
-                    dir.Delete(true);
+                    if (DateTime.TryParse(dir.Name, out dt) && DateTime.Now.Subtract(dt).Days >= LogParams.LogRetentionDayCount)
+                    {
+                        dir.Delete(true);
+                    }
                 }
             }
         }

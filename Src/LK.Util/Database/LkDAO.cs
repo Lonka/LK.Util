@@ -4,12 +4,13 @@ using System.Text;
 using System.Data.Common;
 using System.Data;
 
+
 namespace LK.Util
 {
     /// <summary>
-    /// Data Access Object(Static),請先給好ConnectionString(Chroma可以不給),DataBaseType(Oracle),UseType(Chroma)
+    /// Data Access Object(Static)
     /// </summary>
-    public class LkDAO
+    public class LkDao
     {
         private static string _connectionString;
 
@@ -45,19 +46,19 @@ namespace LK.Util
             }
         }
 
-        private static LkDbType _useType = LkDbType.CommonDb;
+        private static LkDbType _dbType = LkDbType.CommonDb;
         /// <summary>
         /// 使用那個DAO
         /// </summary>
-        public static LkDbType UseType
+        public static LkDbType DbType
         {
             get
             {
-                return _useType;
+                return _dbType;
             }
             set
             {
-                _useType = value;
+                _dbType = value;
             }
         }
 
@@ -68,7 +69,7 @@ namespace LK.Util
             {
                 if (_dataBase == null)
                 {
-                    switch (UseType)
+                    switch (DbType)
                     {
                         case LkDbType.CommonDb:
                             _dataBase = new CommonDb(ConnectionString, CommonType);
@@ -136,9 +137,9 @@ namespace LK.Util
         /// 執行SQL Statement
         /// </summary>
         /// <param name="strSQL">SQL Statement</param>
-        public static void ExecuteSQL(string strSQL)
+        public static void ExecuteSQL(string strSQL, bool isTransaction = true)
         {
-            DataBase.ExecuteSQL(strSQL);
+            DataBase.ExecuteSQL(strSQL, isTransaction);
         }
 
         /// <summary>
@@ -146,9 +147,9 @@ namespace LK.Util
         /// </summary>
         /// <param name="strSQL">SQL Statement</param>
         /// <param name="parms">Parameter</param>
-        public static void ExecuteSQL(string strSQL, List<DbParameter> parms)
+        public static void ExecuteSQL(string strSQL, List<DbParameter> parms, bool isTransaction = true)
         {
-            DataBase.ExecuteSQL(strSQL, parms);
+            DataBase.ExecuteSQL(strSQL, parms, isTransaction);
         }
 
     }

@@ -2,6 +2,6 @@
 {
     internal interface ILogFactory
     {
-        LogProvide CreatorProvide();
+        LogProvide CreatorProvide(LkLogParams param);
     }
 }

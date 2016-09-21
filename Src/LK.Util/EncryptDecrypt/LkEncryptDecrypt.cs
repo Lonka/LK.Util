@@ -48,8 +48,30 @@ namespace LK.Util
             }
         }
 
-        public static string IVStr { get; set; }
-        public static string KeyStr { get; set; }
+        private static string _ivStr = "12345678";
+        public static string IVStr
+        {
+            get
+            {
+                return _ivStr;
+            }
+            set
+            {
+                _ivStr = value;
+            }
+        }
+        private static string _keyStr = "abcdefgh";
+        public static string KeyStr
+        {
+            get
+            {
+                return _keyStr;
+            }
+            set
+            {
+                _keyStr = value;
+            }
+        }
 
         /// <summary>
         /// 解密

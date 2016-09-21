@@ -8,7 +8,7 @@
         /// <summary>
         /// MySql native provider
         /// </summary>
-        MySql = 0,
+        //MySql = 0,
 
         /// <summary>
         /// SqlServer native provider
@@ -23,7 +23,7 @@
         /// <summary>
         /// Teradata native provider
         /// </summary>
-        Teradata = 3,
+        //Teradata = 3,
 
         /// <summary>
         /// Sqlite native provider

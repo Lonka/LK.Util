@@ -16,7 +16,7 @@ namespace LK.Util
         /// <param name="str"></param>
         /// <param name="separator">切割器(字串)</param>
         /// <returns></returns>
-        public static string[] Split(string str, string separator)
+        public static string[] Split(this string str, string separator)
         {
             string[] newLine = new string[] { separator };
             return str.Split(newLine, StringSplitOptions.RemoveEmptyEntries);
@@ -30,7 +30,7 @@ namespace LK.Util
         /// <param name="byteLength">所需"字元"長度(BYTES數)</param>
         /// <param name="mark">每行分隔符號</param>
         /// <returns></returns>
-        public static string BreakLine(string sourceString, int byteLength, string mark)
+        public static string BreakLine(this string sourceString, int byteLength, string mark)
         {
             string result = string.Empty;
 
@@ -81,6 +81,7 @@ namespace LK.Util
             }
             return result;
         }
+
 
         public static string Substring(this string str, int startIndex, int length, bool useByte)
         {
@@ -188,5 +189,98 @@ namespace LK.Util
             }
             return true;
         }
+
+
+        /// <summary>
+        /// 依不同db及不同type來轉成query的field(to_date(...))
+        /// </summary>
+        /// <param name="source">欄位</param>
+        /// <param name="value">值</param>
+        /// <param name="type">型態</param>
+        /// <param name="dbType">db</param>
+        /// <returns></returns>
+        public static string ParseDbField(this string source, string value, Type type, CommonType dbType)
+        {
+            string result = string.Empty;
+            if (type == typeof(string))
+            {
+                if (value.ToUpper().Equals("NULL"))
+                {
+                    result = value + " as " + source;
+                }
+                else
+                {
+                    result = "'" + value + "' as " + source;
+                }
+            }
+            else if (type == typeof(double))
+            {
+                result = value + " as " + source;
+            }
+            else if (type == typeof(DateTime))
+            {
+                DateTime dt;
+                if (DateTime.TryParse(value, out dt))
+                {
+                    switch (dbType)
+                    {
+                        case CommonType.SqlServer:
+                            result = "convert(datetime, '" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "',20) as " + source;
+                            break;
+                        case CommonType.Oracle:
+                            result = "TO_DATE('" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "', 'YYYY/MM/DD HH:MI:SS') as " + source;
+                            break;
+                    }
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 依不同db加上query的參數格式(@param)
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dbType"></param>
+        /// <returns></returns>
+        public static string ParseDbParam(this string source, CommonType dbType)
+        {
+            string result = string.Empty;
+            switch (dbType)
+            {
+                case CommonType.Sqlite:
+                case CommonType.SqlServer:
+                    result = "@" + source;
+                    break;
+                case CommonType.Oracle:
+                    result = ":" + source;
+                    break;
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// 轉換insert字串
+        /// </summary>
+        /// <param name="dbType"></param>
+        /// <param name="insertCmds">insert list ex:[into T (A) values (1)]</param>
+        /// <returns></returns>
+        public static string ConvertInsertString(CommonType dbType, List<string> insertCmds)
+        {
+            string result = string.Empty;
+            switch (dbType)
+            {
+                case CommonType.SqlServer:
+                    result = " insert " + string.Join(" ; insert ", insertCmds.ToArray()) + ";";
+                    break;
+                case CommonType.Oracle:
+                    result = " insert all " + string.Join(string.Empty, insertCmds.ToArray()) + " select * from dual ";
+                    break;
+            }
+            return result;
+        }
+
+
+
     }
 }

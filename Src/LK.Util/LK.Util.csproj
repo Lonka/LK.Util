@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>da00062f</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -52,12 +54,13 @@
     <Compile Include="Calculator\Model\LkParamInfo.cs" />
     <Compile Include="Cmd\LkNetUse.cs" />
     <Compile Include="Compress\LkCompress.cs" />
-    <Compile Include="Database\LkDAO.cs" />
+    <Compile Include="Database\LkDao.cs" />
     <Compile Include="Database\Impl\Common\CommonDb.cs" />
     <Compile Include="Database\Impl\Common\CommonDbInfo.cs" />
     <Compile Include="Database\Impl\Common\CommonType.cs" />
     <Compile Include="Database\IDatabase.cs" />
-    <Compile Include="Database\LkDAOInstance.cs" />
+    <Compile Include="Database\LkDaoInstance.cs" />
+    <Compile Include="Database\LkDaoUtil.cs" />
     <Compile Include="Database\LkDbType.cs" />
     <Compile Include="DataSerializer\LkDataSerializer.cs" />
     <Compile Include="EncryptDecrypt\EncryptFactory\IEncrypt.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="Log\Impl\File\FileLogFactory.cs" />
     <Compile Include="Log\ILogFactory.cs" />
     <Compile Include="Log\LkLog.cs" />
+    <Compile Include="Log\LkLogInstance.cs" />
     <Compile Include="Log\Type\LogImplType.cs" />
     <Compile Include="Log\Type\LogLevel.cs" />
     <Compile Include="Log\LkLogParams.cs" />
@@ -89,8 +93,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflector\LkReflector.cs" />
     <Compile Include="Reflector\Model\LkReflectInstance.cs" />
+    <Compile Include="Utilities\Compare\Factory\CompareDatetimeFactory.cs" />
+    <Compile Include="Utilities\Compare\Factory\CompareNumericalFactory.cs" />
     <Compile Include="Utilities\DateInterval.cs" />
+    <Compile Include="Utilities\Compare\ICompare.cs" />
     <Compile Include="Utilities\LkCommonUtil.cs" />
+    <Compile Include="Utilities\Compare\LkCompareUtil.cs" />
     <Compile Include="Utilities\LkDateUtil.cs" />
     <Compile Include="Utilities\LkIntUtil.cs" />
     <Compile Include="MessageBox\WebImpl\MsgBoxBtnImpl\WebMsgBoxBtnOk.cs" />
@@ -109,6 +117,7 @@
     <Compile Include="MessageBox\MessageModes.cs" />
     <Compile Include="MessageBox\MsgBox.cs" />
     <Compile Include="Utilities\LkStringUtil.cs" />
+    <Compile Include="Utilities\Compare\Type\CompareType.cs" />
     <Compile Include="Validation\LkValidation.cs" />
     <Compile Include="Validation\RegularExp.cs" />
     <Compile Include="Xml\LkParseXml.cs" />
@@ -134,7 +143,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

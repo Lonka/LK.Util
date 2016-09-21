@@ -25,21 +25,21 @@ namespace LK.Util
             }
         }
 
-        private string _logFile = AppDomain.CurrentDomain.BaseDirectory + "LogFiles";
+        private string _logPath = AppDomain.CurrentDomain.BaseDirectory + "LogFiles";
         /// <summary>
         /// 記錄Log的資料夾路徑
         /// <para>預設：BaseDirectory\\LogFiles</para>
         /// <para>對應：（Setting.ini）Path Setting -> LogFile</para>
         /// </summary>
-        public string LogFile
+        public string LogPath
         {
             get
             {
-                return _logFile;
+                return _logPath;
             }
             set
             {
-                _logFile = value;
+                _logPath = value;
             }
         }
 

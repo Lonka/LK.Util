@@ -10,8 +10,16 @@ namespace LK.Util
     {
         public static string GetFilePath(string fileName)
         {
-            string filePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, fileName);
-            return Path.GetFullPath(filePath);
+            string path = fileName;
+            if (fileName.StartsWith(@".\"))
+            {
+                path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName.Replace(@".\", string.Empty));
+            }
+            else if (fileName.StartsWith(@"\") || !fileName.Contains(@":\"))
+            {
+                path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            }
+            return path;
         }
 
         public static string TrimText(string text)

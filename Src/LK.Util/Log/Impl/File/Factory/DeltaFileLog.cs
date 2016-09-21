@@ -8,12 +8,15 @@ namespace LK.Util
         protected override void DeleteOverdueLog()
         {
             DirectoryInfo parentDir = new DirectoryInfo(m_filePath);
-            FileInfo[] files = parentDir.GetFiles();
-            foreach (FileInfo file in files)
+            if (parentDir.Exists)
             {
-                if(DateTime.Now.Subtract( file.LastWriteTime).Days >= LkLog.LogParams.LogRetentionDayCount)
+                FileInfo[] files = parentDir.GetFiles();
+                foreach (FileInfo file in files)
                 {
-                    file.Delete();
+                    if (DateTime.Now.Subtract(file.LastWriteTime).Days >= LogParams.LogRetentionDayCount)
+                    {
+                        file.Delete();
+                    }
                 }
             }
         }

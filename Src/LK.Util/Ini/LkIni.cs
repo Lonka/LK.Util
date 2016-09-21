@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Linq;
 
 namespace LK.Util
 {
@@ -12,6 +15,11 @@ namespace LK.Util
         /// 請給絕對路徑
         /// </summary>
         public static string IniPath { get; set; }
+
+        public static bool GetProfileBool(string section, string key, bool defaultValue)
+        {
+            return GetProfileBool(IniPath, section, key, defaultValue);
+        }
 
         public static bool GetProfileBool(string iniFile, string section, string key, bool defaultValue)
         {
@@ -32,6 +40,22 @@ namespace LK.Util
             return result;
         }
 
+        public static object GetProfileEnum(string iniFile, Type enumType, string section, string key, string defaultValue)
+        {
+            object result = null;
+            string profileValue = GetProfileString(iniFile, section, key, defaultValue);
+            try
+            {
+                result = Enum.Parse(enumType, profileValue);
+            }
+            catch
+            {
+                result = Enum.Parse(enumType, defaultValue);
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// 取得Setting.ini的Enum資料
         /// </summary>
@@ -42,17 +66,7 @@ namespace LK.Util
         /// <returns></returns>
         public static object GetProfileEnum(Type enumType, string section, string key, string defaultValue)
         {
-            object result = null;
-            string profileValue = GetProfileString(IniPath, section, key, defaultValue);
-            try
-            {
-                result = Enum.Parse(enumType, profileValue);
-            }
-            catch
-            {
-                result = Enum.Parse(enumType, defaultValue);
-            }
-            return result;
+            return GetProfileEnum(IniPath, enumType, section, key, defaultValue);
         }
 
         public static int GetProfileInt(string iniFile, string section, string key, int defaultValue)
@@ -154,6 +168,87 @@ namespace LK.Util
             if (WritePrivateProfileString(section, key, value, iniFile) > 0)
                 result = true;
             return (result);
+        }
+
+        /// <summary>
+        /// 取得ini內的所有section
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetSections()
+        {
+            return GetSections(IniPath);
+        }
+
+        /// <summary>
+        /// 取得ini內的所有section
+        /// </summary>
+        /// <param name="iniFiles"></param>
+        /// <returns></returns>
+        public static List<string> GetSections(string iniFile)
+        {
+            List<string> result = new List<string>();
+            using (StreamReader sr = new StreamReader(iniFile, System.Text.Encoding.Default))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if (line.StartsWith("[") && line.EndsWith("]"))
+                    {
+                        result.Add(line.Replace("[", string.Empty).Replace("]", string.Empty));
+                    }
+                }
+            }
+            return result;
+        }
+
+
+
+        public static List<string> GetKeys(string section)
+        {
+            return new List<string>(GetKeyValues(IniPath, section).Keys);
+        }
+
+        public static List<string> GetKeys(string iniFile, string section)
+        {
+            return new List<string>(GetKeyValues(iniFile, section).Keys);
+        }
+        public static Dictionary<string, string> GetKeyValues(string section)
+        {
+            return GetKeyValues(IniPath, section);
+        }
+        public static Dictionary<string, string> GetKeyValues(string iniFile, string section)
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            using (StreamReader sr = new StreamReader(iniFile, System.Text.Encoding.Default))
+            {
+                bool isSection = false;
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if(line.StartsWith("'"))
+                    {
+                        continue;
+                    }
+                    if (isSection)
+                    {
+                        string[] token = line.Split('=');
+                        if (token.Length == 2 && !string.IsNullOrEmpty(token[0]))
+                        {
+                            result[token[0]] = token[1];
+                        }
+                    }
+
+                    if (line.StartsWith("[" + section) && line.EndsWith("]"))
+                    {
+                        isSection = true;
+                    }
+                    else if (line.StartsWith("[") && line.EndsWith("]") && isSection)
+                    {
+                        break;
+                    }
+                }
+            }
+            return result;
         }
 
         [DllImport("KERNEL32.DLL", EntryPoint = "GetPrivateProfileString")]

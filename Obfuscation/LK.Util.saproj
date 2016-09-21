@@ -161,6 +161,16 @@
             <Assembly AssemblyName="System.Xml.Linq, Culture=neutral, PublicKeyToken=b77a5c561934e089">
                 <Merging />
             </Assembly>
+            <Assembly AssemblyName="System.Data.SQLite, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
+                <Merging Merge="0">
+                    <Pruning />
+                    <Obfuscation />
+                    <ControlFlow />
+                    <MemberRefsProxy />
+                    <ResourcesCompression />
+                </Merging>
+                <Embedding />
+            </Assembly>
         </Assemblies>
     </Configuration>
 </SmartAssemblyProject>

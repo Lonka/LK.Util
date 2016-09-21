@@ -21,7 +21,7 @@ namespace LK.Util
         {
             get
             {
-                return LkLog.LogParams.LogLevel;
+                return LogParams.LogLevel;
             }
         }
 
@@ -32,7 +32,7 @@ namespace LK.Util
         {
             get
             {
-                return LkLog.LogParams.MaxLogSize;
+                return LogParams.MaxLogSize;
             }
         }
 
@@ -56,6 +56,9 @@ namespace LK.Util
             }
             return result;
         }
+
+
+        public LkLogParams LogParams { get; set; }
 
         /// <summary>
         /// 取得Log訊息的實際內容

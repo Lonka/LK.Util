@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using LK.Util;
 using System.Data;
+using System.Data.Common;
+using System.IO;
 
 namespace ForTest
 {
@@ -14,10 +16,14 @@ namespace ForTest
             #region LOG
             //LkLog.LogParams = new LkLogParams()
             //{
-            //    LogImplType = LogImplType.FileDelta,
             //    LogRetentionDayCount = 30
             //};
-            //LkLog.Error("abc");
+            //LkLog.WriteLog(LogLevel.Error, "abc");
+
+            //LkLogInstance log = new LkLogInstance(new LkLogParams() { 
+            // LogPath=AppDomain.CurrentDomain.BaseDirectory+"abcde",
+            //});
+            //log.WriteLog(LogLevel.Critical, "111");
             //LK.Util.LkLog.WriteLog(LK.Util.LogLevel.Critical, "abb");
             #endregion
 
@@ -77,21 +83,24 @@ namespace ForTest
             #endregion
 
             #region Mapping
-            DataTable a = new DataTable();
-            a.Columns.Add("A");
-            a.Columns.Add("B");
-            DataRow drX = a.NewRow();
-            drX["A"] = 1;
-            drX["B"] = 2;
-            abc item = new abc ();
-            LkMapper.SetItemFromRow<abc>(item, drX);
-            abc xxx = LkMapper.CreateClassFromRow<abc>(drX);
+            //DataTable a = new DataTable();
+            //a.Columns.Add("A");
+            //a.Columns.Add("B");
+            //DataRow drX = a.NewRow();
+            //drX["A"] = 1;
+            //drX["B"] = 2;
+            //abc item = new abc();
+            //LkMapper.SetItemFromRow<abc>(item, drX);
+            //abc xxx = LkMapper.CreateClassFromRow<abc>(drX);
             #endregion
 
             #region INI
-            //LkIni.IniPath = AppDomain.CurrentDomain.BaseDirectory + "setting.ini";
-            //string ii= LkIni.GetProfileString("test", "a", "AAA");
-            //int oo = LkIni.GetProfileInt("test", "b", 0);
+            LkIni.IniPath = AppDomain.CurrentDomain.BaseDirectory + "setting.ini";
+            string ii = LkIni.GetProfileString("test", "a", "AAA");
+            int oo = LkIni.GetProfileInt("test", "b", 0);
+            List<string> ojioj= LkIni.GetSections();
+            List<string> aerser = LkIni.GetKeys("test1");
+            Dictionary<string, string> aeersrrser = LkIni.GetKeyValues("test1");
             #endregion
 
             #region SecurePass
@@ -106,29 +115,81 @@ namespace ForTest
 
             #region DB
 
+
             //oracle
-            string connOracle = "Data Source=127.0.0.1:1521/orcl.delta.corp;User ID=c##mes_admin;Password=Admin123;";
-            LkDAOInstance oracleDao = new LkDAOInstance(connOracle, CommonType.Oracle, null);
-            DataTable ii = oracleDao.GetDataTable("select * from work_order");
-            oracleDao.ExecuteSQL("delete work_order");
-            oracleDao.ExecuteSQL(@"insert all
-            into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('23',1,1,1,'1',sysdate,sysdate,50)
-            into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('23',1,1,1,'1',sysdate,sysdate,50)
-            select * from dual");
+
+            //DateTime a = DateTime.Parse("09/20/2016 17:53:00");
+            //string connOracle = "Data Source=127.0.0.1:1521/orcl.delta.corp;User ID=c##mes_admin;Password=Admin123;";
+            //LkDaoInstance oracleDao = new LkDaoInstance(connOracle, CommonType.Oracle, null);
+
+
+            //DbParameter ojaioer =  LkDaoUtil.GetParameter(CommonType.Oracle);
+            //ojaioer.Value = a;
+            //ojaioer.ParameterName = "end_date";
+            //ojaioer.DbType = LkDaoUtil.GetDbType(typeof(DateTime));
+
+            //List<DbParameter> oooose = new List<DbParameter>(){
+            // ojaioer
+            //};
+            //DataTable i1231i = oracleDao.GetDataTable("select * from work_order where end_date > :end_date", oooose);
+
+
+//            oracleDao.ExecuteSQL("delete work_order");
+//            oracleDao.ExecuteSQL(@"insert all
+//            into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('23',1,1,1,'1',sysdate,sysdate,50)
+//            into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('23',1,1,1,'1',sysdate,sysdate,50)
+//            select * from dual");
 
 
 
-            string connSql = "Data Source=127.0.0.1,1433;Initial Catalog=MES;User ID=sa;Password=Admin123;";
-            LkDAOInstance sqlDao = new LkDAOInstance(connSql, CommonType.SqlServer, null);
-            DataTable oo = sqlDao.GetDataTable("select * from work_order");
-            sqlDao.ExecuteSQL(@"insert  into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('23',1,1,1,'1',GETDATE(),GETDATE(),50);
-            insert  into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('23',1,1,1,'1',GETDATE(),GETDATE(),50);
-            ");
+//            string connSql = "Data Source=127.0.0.1,1433;Initial Catalog=MES;User ID=sa;Password=Admin123;";
+//            LkDaoInstance sqlDao = new LkDaoInstance(connSql, CommonType.SqlServer, null);
+//            //DataTable o12313o = sqlDao.GetDataTable("select * from work_order");
+//            sqlDao.ExecuteSQL(@"insert  into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('26',1,1,1,'1',GETDATE(),GETDATE(),50);
+//
+//            insert  into WORK_ORDER (work_order_number,bom_id,route_id,mes_id,status,begin_date,end_date,qty) values ('28',1,1,1,'1',GETDATE(),GETDATE(),50);
+//
+//            ",false);
 
 
 
             #endregion
 
+            #region Serializer
+
+            //List<abc> ioser = new List<abc>();
+            //ioser.Add(new abc() { A = 1, B = 2 });
+            //ioser.Add(new abc() { A = 2, B = 3 });
+            //LkDataSerializer.ObjectSerialize("test", ioser);
+            //object oooieie;
+            //LkDataSerializer.ObjectDeserialize("test", out oooieie);
+
+            DataTable iojio = new DataTable();
+            iojio.Columns.Add("A");
+            iojio.Columns.Add("B");
+            DataRow dr = iojio.NewRow();
+            dr["A"] = 1;
+            dr["B"] = 2;
+            iojio.Rows.Add(dr);
+            LkDataSerializer.DataTableSerialize(Path.Combine(Path.Combine("mes_1.ini", "MT1"),"abc"), iojio);
+            //LkDataSerializer.DataTableSerialize("123", iojio);
+            DataTable oiserjiso;
+            LkDataSerializer.DataTableDeserialize(Path.Combine(Path.Combine("mes_1.ini", "MT1"), "abc"), out oiserjiso);
+
+            string oojseirosj = @"D:\Project\Delta\prj-cn-csrgc\trunk\4-Development\40-Source\Window Service\DeltaBEMS System Service\DeltaBEMSSystemService\bin\Debug\RetryFiles\mes_1.ini\Migrate Task 1\20160921155819036";
+            LkDataSerializer.DataTableDeserialize(oojseirosj, out oiserjiso);
+
+            #endregion
+
+            //object obj1 = 3;
+            //object obj2 = 2;
+            //bool joisejrs= LkCompareUtil.Compare(LkCompareType.IsGreaterThen, typeof(int), obj1, obj2);
+
+            //object oo1 = new DateTime(2016, 9, 20, 9, 9, 9);
+            //object oo2 = new DateTime(2016, 9, 20, 9, 9, 9);
+            //bool josejriso = LkCompareUtil.Compare(LkCompareType.Equal, typeof(DateTime), oo1, oo2);
+
+            //string jojsioerjso= "abc".ParseDbField("2016/9/9", typeof(DateTime), CommonType.SqlServer);
         }
 
         class abc

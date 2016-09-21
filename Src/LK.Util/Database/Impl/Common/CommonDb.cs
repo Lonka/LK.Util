@@ -213,45 +213,65 @@ namespace LK.Util
         }
 
 
-        public void ExecuteSQL(string strSQL)
+        public void ExecuteSQL(string strSQL, bool isTransaction = true)
         {
             using (DbConnection dbConnection = dbProviderFactory.CreateConnection())
             {
                 dbConnection.ConnectionString = GetConnectionString();
                 dbConnection.Open();
-                DbTransaction dbTransaction = dbConnection.BeginTransaction();
+                DbTransaction dbTransaction = null;
+                if (isTransaction)
+                {
+                    dbTransaction = dbConnection.BeginTransaction();
+                }
                 try
                 {
                     DbCommand dbCommand = dbProviderFactory.CreateCommand();
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
-                    dbCommand.Transaction = dbTransaction;
+                    if (isTransaction)
+                    {
+                        dbCommand.Transaction = dbTransaction;
+                    }
                     dbCommand.ExecuteNonQuery();
-                    dbTransaction.Commit();
+                    if (isTransaction)
+                    {
+                        dbTransaction.Commit();
+                    }
                     //http://www.dotblogs.com.tw/jeff-yeh/archive/2009/12/04/12286.aspx
                     dbCommand.Cancel();
                 }
                 catch (Exception ex)
                 {
-                    dbTransaction.Rollback();
+                    if (isTransaction)
+                    {
+                        dbTransaction.Rollback();
+                    }
                     throw ex;
                 }
             }
         }
 
-        public void ExecuteSQL(string strSQL, List<DbParameter> parms)
+        public void ExecuteSQL(string strSQL, List<DbParameter> parms, bool isTransaction = true)
         {
             using (DbConnection dbConnection = dbProviderFactory.CreateConnection())
             {
                 dbConnection.ConnectionString = GetConnectionString();
                 dbConnection.Open();
-                DbTransaction dbTransaction = dbConnection.BeginTransaction();
+                DbTransaction dbTransaction = null;
+                if (isTransaction)
+                {
+                    dbTransaction = dbConnection.BeginTransaction();
+                }
                 try
                 {
                     DbCommand dbCommand = dbProviderFactory.CreateCommand();
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
-                    dbCommand.Transaction = dbTransaction;
+                    if (isTransaction)
+                    {
+                        dbCommand.Transaction = dbTransaction;
+                    }
                     for (int i = 0; i < parms.Count; i++)
                     {
                         DbParameter dbParms = dbCommand.CreateParameter();
@@ -262,13 +282,19 @@ namespace LK.Util
                         dbCommand.Parameters.Add(dbParms);
                     }
                     dbCommand.ExecuteNonQuery();
-                    dbTransaction.Commit();
+                    if (isTransaction)
+                    {
+                        dbTransaction.Commit();
+                    }
                     //http://www.dotblogs.com.tw/jeff-yeh/archive/2009/12/04/12286.aspx
                     dbCommand.Cancel();
                 }
                 catch (Exception ex)
                 {
-                    dbTransaction.Rollback();
+                    if (isTransaction)
+                    {
+                        dbTransaction.Rollback();
+                    }
                     throw ex;
                 }
             }

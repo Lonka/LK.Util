@@ -2,10 +2,10 @@
 {
     internal class FileLogFactory : ILogFactory
     {
-        public LogProvide CreatorProvide()
+        public LogProvide CreatorProvide(LkLogParams param )
         {
             LogProvide logProvide = new CommonFileLog();
-            switch (LkLog.LogParams.LogImplType)
+            switch (param.LogImplType)
             {
                 case LogImplType.FileDelta:
                     logProvide = new DeltaFileLog();
@@ -13,6 +13,7 @@
                 case LogImplType.FileCommon:
                     break;
             }
+            logProvide.LogParams = param;
             //LogProvide logProvide = new ThreadFileLog();
             return logProvide;
         }

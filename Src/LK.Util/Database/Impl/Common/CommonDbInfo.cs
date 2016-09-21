@@ -26,10 +26,10 @@ namespace LK.Util
             {
                 if (_dbInfo == null)
                     _dbInfo = new List<CommonDbInfo>();
-                _dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.MySql, dbProvider = "MySql.Data.MySqlClient" });
+                //_dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.MySql, dbProvider = "MySql.Data.MySqlClient" });
                 _dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.SqlServer, dbProvider = "System.Data.SqlClient" });
                 _dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.Oracle, dbProvider = "System.Data.OracleClient" });
-                _dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.Teradata, dbProvider = "Teradata.Client.Provider" });
+                //_dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.Teradata, dbProvider = "Teradata.Client.Provider" });
                 _dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.Sqlite, dbProvider = "System.Data.SQLite" });
                 _dbInfo.Add(new CommonDbInfo() { dataBaseType = CommonType.OleDb, dbProvider = "System.Data.OleDb" });
                 return _dbInfo;

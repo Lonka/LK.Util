@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 using System.Data.Common;
+
+
+
 namespace LK.Util
 {
     /// <summary>
     /// Data Access Object(Instance)
     /// </summary>
-    public class LkDAOInstance
+    public class LkDaoInstance
     {
         /// <summary>
         /// 建構式
         /// </summary>
         /// <param name="connectionString">連線字串</param>
-        /// <param name="dataBaseType">連線資料庫種類(預設為Oracle)</param>
-        /// <param name="useType">使用種類(預設為Self)</param>
-        public LkDAOInstance(string connectionString, CommonType? dataBaseType, LkDbType? useType)
+        /// <param name="commonType">連線資料庫種類(預設為Oracle)</param>
+        /// <param name="dbType">使用種類(預設為Self)</param>
+        public LkDaoInstance(string connectionString, CommonType? commonType, LkDbType? dbType)
         {
             _connectionString = connectionString;
-            if (dataBaseType != null)
+            if (commonType != null)
             {
-                _commonType = dataBaseType.Value;
+                _commonType = commonType.Value;
             }
-            if (useType != null)
+            if (dbType != null)
             {
-                _useType = useType.Value;
+                _useType = dbType.Value;
             }
         }
 
@@ -154,9 +157,9 @@ namespace LK.Util
         /// 執行SQL Statement
         /// </summary>
         /// <param name="strSQL">SQL Statement</param>
-        public void ExecuteSQL(string strSQL)
+        public void ExecuteSQL(string strSQL, bool isTransaction = true)
         {
-            DataBase.ExecuteSQL(strSQL);
+            DataBase.ExecuteSQL(strSQL, isTransaction);
         }
 
         /// <summary>
@@ -164,9 +167,12 @@ namespace LK.Util
         /// </summary>
         /// <param name="strSQL">SQL Statement</param>
         /// <param name="parms">Parameter</param>
-        public void ExecuteSQL(string strSQL, List<DbParameter> parms)
+        public void ExecuteSQL(string strSQL, List<DbParameter> parms, bool isTransaction = true)
         {
-            DataBase.ExecuteSQL(strSQL, parms);
+            DataBase.ExecuteSQL(strSQL, parms, isTransaction);
         }
+
+
+
     }
 }
