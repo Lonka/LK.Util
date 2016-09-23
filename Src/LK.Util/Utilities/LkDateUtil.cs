@@ -13,7 +13,7 @@ namespace LK.Util
         /// <summary>
         /// 取得民國年
         /// </summary>
-        public static int GetTaiwanYear(DateTime dt)
+        public static int GetTaiwanYear(this DateTime dt)
         {
             TaiwanCalendar tc = new TaiwanCalendar();
             return tc.GetYear(dt);
@@ -22,7 +22,7 @@ namespace LK.Util
         /// <summary>
         /// 取得民國年月日 (100/10/10)
         /// </summary>
-        public static string GetTaiwanDate(DateTime dt)
+        public static string GetTaiwanDate(this DateTime dt)
         {
             TaiwanCalendar tc = new TaiwanCalendar();
             return tc.GetYear(dt) + "/" + tc.GetMonth(dt) + "/" + tc.GetDayOfMonth(dt);
@@ -31,7 +31,7 @@ namespace LK.Util
         /// <summary>
         /// 取得民國年月日 (100年10月10日)
         /// </summary>
-        public static string GetTaiwanChiDate(DateTime dt)
+        public static string GetTaiwanChiDate(this DateTime dt)
         {
             TaiwanCalendar tc = new TaiwanCalendar();
             return tc.GetYear(dt) + "年" + tc.GetMonth(dt) + "月" + tc.GetDayOfMonth(dt) + "日";
@@ -40,7 +40,7 @@ namespace LK.Util
         /// <summary>
         /// 取得農曆年
         /// </summary>
-        public static int GetTaiwanLnsYear(DateTime dt)
+        public static int GetTaiwanLnsYear(this DateTime dt)
         {
             TaiwanLunisolarCalendar tlc = new TaiwanLunisolarCalendar();
             return tlc.GetYear(dt);
@@ -49,7 +49,7 @@ namespace LK.Util
         /// <summary>
         /// 取得農曆月
         /// </summary>
-        public static int GetTaiwanLnsMonth(DateTime dt)
+        public static int GetTaiwanLnsMonth(this DateTime dt)
         {
             TaiwanLunisolarCalendar tlc = new TaiwanLunisolarCalendar();
             return tlc.GetMonth(dt);
@@ -58,7 +58,7 @@ namespace LK.Util
         /// <summary>
         /// 取得農曆日
         /// </summary>
-        public static int GetTaiwanLnsDay(DateTime dt)
+        public static int GetTaiwanLnsDay(this DateTime dt)
         {
             TaiwanLunisolarCalendar tlc = new TaiwanLunisolarCalendar();
             return tlc.GetDayOfMonth(dt);
@@ -67,7 +67,7 @@ namespace LK.Util
         /// <summary>
         /// 取得農曆年月日 (100/10/10)
         /// </summary>
-        public static string GetTaiwanLnsDate(DateTime dt)
+        public static string GetTaiwanLnsDate(this DateTime dt)
         {
             TaiwanLunisolarCalendar tlc = new TaiwanLunisolarCalendar();
             return tlc.GetYear(dt) + "/" + tlc.GetMonth(dt) + "/" + tlc.GetDayOfMonth(dt);
@@ -76,7 +76,7 @@ namespace LK.Util
         /// <summary>
         /// 取得農曆年月日 (100年10月10日)
         /// </summary>
-        public static string GetTaiwanLnsChiDate(DateTime dt)
+        public static string GetTaiwanLnsChiDate(this DateTime dt)
         {
             TaiwanLunisolarCalendar tlc = new TaiwanLunisolarCalendar();
             return tlc.GetYear(dt) + "年" + tlc.GetMonth(dt) + "月" + tlc.GetDayOfMonth(dt) + "日";
@@ -87,7 +87,7 @@ namespace LK.Util
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static string GetTaiwanHeaEarDate(DateTime dt)
+        public static string GetTaiwanHeaEarDate(this DateTime dt)
         {
             string teanGean = "甲乙丙丁戊己庚辛壬癸";
             string deGe = "子丑寅卯辰巳午未申酉戌亥";
@@ -110,7 +110,7 @@ namespace LK.Util
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public static string GetChiAnimal(DateTime dt)
+        public static string GetChiAnimal(this DateTime dt)
         {
             string animal = "鼠牛虎兔龍蛇馬羊猴雞狗豬";
             TaiwanLunisolarCalendar tlc = new TaiwanLunisolarCalendar();
@@ -125,7 +125,7 @@ namespace LK.Util
         /// <param name="sDate">起始日期</param>
         /// <param name="eDate">結束日期</param>
         /// <returns></returns>
-        public static DateInterval CountDateInterval(DateTime sDate, DateTime eDate)
+        public static DateInterval CountDateInterval(this DateTime sDate, DateTime eDate)
         {
             DateInterval dateInterval = new DateInterval();
             TimeSpan ts = eDate - sDate;
@@ -237,7 +237,7 @@ namespace LK.Util
         /// </summary>
         /// <param name="d​​t">日期</param>
         /// <returns> 該日期在該年中的周數</returns>
-        public static int GetWeekOfYear(DateTime dt)
+        public static int GetWeekOfYear(this DateTime dt)
         {
             TaiwanCalendar tc = new TaiwanCalendar();
             return tc.GetWeekOfYear(dt, CalendarWeekRule.FirstDay, DayOfWeek.Monday) + (dt.DayOfWeek == DayOfWeek.Sunday ? 1 : 0);
@@ -248,7 +248,7 @@ namespace LK.Util
         /// </summary>
         /// <param name="d​​t">日期</param>
         /// <returns> 該日期在該月中的周數</returns>
-        public static int GetWeekOfMonth(DateTime dt)
+        public static int GetWeekOfMonth(this DateTime dt)
         {
             DateTime first = new DateTime(dt.Year, dt.Month, 1);
             return GetWeekOfYear(dt) - GetWeekOfYear(first) + 1;
@@ -281,7 +281,7 @@ namespace LK.Util
         }
 
 
-        public static int weekNum(System.DayOfWeek dw, DateTime dt)
+        public static int weekNum(this DateTime dt,System.DayOfWeek dw)
         {
             int weeknow = Convert.ToInt32(dw);
             int daydiff = (-1) * (weeknow + 1);
@@ -295,6 +295,12 @@ namespace LK.Util
                 return 1;
             else
                 return (weeks + 1);
+        }
+
+        public static DateTime GetStandardTime(this DateTime dt, int blockSec)
+        {
+            int timeBlock = ((int)dt.TimeOfDay.TotalSeconds / blockSec) + 1;
+            return dt.Date.AddSeconds(timeBlock * blockSec);
         }
     }
 

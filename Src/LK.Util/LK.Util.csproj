@@ -92,7 +92,7 @@
     <Compile Include="Process\LkProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflector\LkReflector.cs" />
-    <Compile Include="Reflector\Model\LkReflectInstance.cs" />
+    <Compile Include="Reflector\Model\LkReflectModel.cs" />
     <Compile Include="Utilities\Compare\Factory\CompareDatetimeFactory.cs" />
     <Compile Include="Utilities\Compare\Factory\CompareNumericalFactory.cs" />
     <Compile Include="Utilities\DateInterval.cs" />
@@ -143,7 +143,13 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <PropertyGroup>
+    <PostBuildEvent>del *.pdb
+del *.xml
+COPY /Y "$(TargetDir)*.*" "$(ProjectDir)..\..\Release\Source"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

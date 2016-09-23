@@ -40,7 +40,7 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
         }

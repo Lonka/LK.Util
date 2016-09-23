@@ -114,7 +114,7 @@ namespace LK.Util
             catch (Exception e)
             {
                 value = nanValue;
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return value;
         }
@@ -148,7 +148,7 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
         }
@@ -281,7 +281,7 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
         }
@@ -314,7 +314,7 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
 

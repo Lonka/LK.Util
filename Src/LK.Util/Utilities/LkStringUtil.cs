@@ -228,7 +228,7 @@ namespace LK.Util
                             result = "convert(datetime, '" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "',20) as " + source;
                             break;
                         case CommonType.Oracle:
-                            result = "TO_DATE('" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "', 'YYYY/MM/DD HH:MI:SS') as " + source;
+                            result = "TO_DATE('" + dt.ToString("yyyy/MM/dd HH:mm:ss") + "', 'YYYY/MM/DD HH24:MI:SS') as " + source;
                             break;
                     }
                 }
@@ -276,6 +276,26 @@ namespace LK.Util
                 case CommonType.Oracle:
                     result = " insert all " + string.Join(string.Empty, insertCmds.ToArray()) + " select * from dual ";
                     break;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 確認是否有寫上副檔名
+        /// </summary>
+        /// <param name="file">檔案</param>
+        /// <param name="extansion">副檔名(ex:dll)</param>
+        /// <returns></returns>
+        public static string CheckExtansion(this string file, string extansion)
+        {
+            string result = string.Empty;
+            if (file.ToUpper().LastIndexOf("." + extansion.ToUpper()) == 3)
+            {
+                result = file;
+            }
+            else if (file.ToUpper().LastIndexOf("." + extansion.ToUpper()) < 0)
+            {
+                result = file + "." + extansion;
             }
             return result;
         }

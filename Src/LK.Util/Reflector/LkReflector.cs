@@ -27,13 +27,13 @@ namespace LK.Util
         /// <summary>
         /// 取得Dll中某個Class的Instance
         /// </summary>
-        /// <param name="dllPath">DLL 的路徑（絕對路徑）</param>
+        /// <param name="dllPath">DLL 的路徑</param>
         /// <param name="className">Class name（ClassLibrary1.Class1）</param>
         /// <param name="output">輸出ReflectInstance，之後可以用該實體去呼叫Method</param>
         /// <returns></returns>
-        public static bool GetDllClassInstance(string dllPath, string className, out LkReflectInstance output)
+        public static bool GetDllClassInstance(string dllPath, string className, out LkReflectModel output)
         {
-            output = new LkReflectInstance();
+            output = new LkReflectModel();
             bool result = false;
             try
             {
@@ -50,14 +50,14 @@ namespace LK.Util
                 //output.AssemblyDll = Assembly.Load(dllBytes);
 
                 //TODO 省memory
-                output.AssemblyDll = Assembly.LoadFile(dllPath);
+                output.AssemblyDll = Assembly.LoadFile(LkCommonUtil.GetFilePath(dllPath.CheckExtansion("dll")));
                 output.ClassType = output.AssemblyDll.GetType(className);
                 output.ClassInstance = Activator.CreateInstance(output.ClassType);
                 result = true;
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
         }
@@ -65,7 +65,7 @@ namespace LK.Util
         /// <summary>
         /// 執行Method
         /// </summary>
-        /// <param name="dllPath">DLL 的路徑（絕對路徑）></param>
+        /// <param name="dllPath">DLL 的路徑></param>
         /// <param name="className">Class name</param>
         /// <param name="methodName">Method name</param>
         /// <param name="input">傳入的參數</param>
@@ -77,9 +77,8 @@ namespace LK.Util
             output = null;
             try
             {
-                Assembly assembly = Assembly.LoadFile(dllPath);
+                Assembly assembly = Assembly.LoadFile(LkCommonUtil.GetFilePath(dllPath.CheckExtansion("dll")));
                 Type type = assembly.GetType(className);
-
                 object instance = Activator.CreateInstance(type);
                 MethodInfo methodInfo = type.GetMethod(methodName);
                 if (input == null)
@@ -94,7 +93,36 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 執行Method
+        /// </summary>
+        /// <param name="dllPath">DLL 的路徑></param>
+        /// <param name="className">Class name</param>
+        /// <param name="methodName">Method name</param>
+        /// <param name="input">傳入的參數</param>
+        /// <param name="output">回傳結果</param>
+        /// <returns></returns>
+        public static bool ExecuteMethod(string dllPath, string className, string methodName, object[] input, out object output)
+        {
+            bool result = false;
+            output = null;
+            try
+            {
+                Assembly assembly = Assembly.LoadFile(LkCommonUtil.GetFilePath(dllPath.CheckExtansion("dll")));
+                Type type = assembly.GetType(className);
+                object instance = Activator.CreateInstance(type);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                output = methodInfo.Invoke(instance, input);
+                result = true;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
             return result;
         }
@@ -106,7 +134,7 @@ namespace LK.Util
         /// <param name="classInstance">要呼叫的Class Instance</param>
         /// <param name="output">回傳結果</param>
         /// <returns></returns>
-        public static bool ExecuteMethod(string methodName, LkReflectInstance classInstance, out object output)
+        public static bool ExecuteMethod(string methodName, LkReflectModel classInstance, out object output)
         {
             bool result = false;
             output = null;
@@ -118,7 +146,7 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
         }
@@ -131,7 +159,7 @@ namespace LK.Util
         /// <param name="input">傳入的參數</param>
         /// <param name="output">回傳結果</param>
         /// <returns></returns>
-        public static bool ExecuteMethod(string methodName, LkReflectInstance classInstance, object input, out object output)
+        public static bool ExecuteMethod(string methodName, LkReflectModel classInstance, object input, out object output)
         {
             bool result = false;
             output = null;
@@ -143,7 +171,8 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, "DLL:" + classInstance.AssemblyDll.ManifestModule.Name + " Class:" + classInstance.ClassType.Name + " Method:" + methodName, e);
+                //LkLog.WriteLog(LogLevel.Error, "DLL:" + classInstance.AssemblyDll.ManifestModule.Name + " Class:" + classInstance.ClassType.Name + " Method:" + methodName, e);
+                throw e;
             }
             return result;
         }
@@ -156,7 +185,7 @@ namespace LK.Util
         /// <param name="input">傳入的參數</param>
         /// <param name="output">回傳結果</param>
         /// <returns></returns>
-        public static bool ExecuteMethod(string methodName, LkReflectInstance classInstance, object[] input, out object output)
+        public static bool ExecuteMethod(string methodName, LkReflectModel classInstance, object[] input, out object output)
         {
             bool result = false;
             output = null;
@@ -168,10 +197,13 @@ namespace LK.Util
             }
             catch (Exception e)
             {
-                LkLog.WriteLog(LogLevel.Error, e);
+                throw e;
             }
             return result;
         }
+
+
+
 
     }
 }

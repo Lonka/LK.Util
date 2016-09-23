@@ -9,7 +9,7 @@ namespace LK.Util
     /// <summary>
     /// Reflection的Instance
     /// </summary>
-    public class LkReflectInstance
+    public class LkReflectModel
     {
         public Assembly AssemblyDll { get; set; }
         public Type ClassType { get; set; }
