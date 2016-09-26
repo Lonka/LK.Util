@@ -281,7 +281,7 @@ namespace LK.Util
         }
 
 
-        public static int weekNum(this DateTime dt,System.DayOfWeek dw)
+        public static int weekNum(this DateTime dt, System.DayOfWeek dw)
         {
             int weeknow = Convert.ToInt32(dw);
             int daydiff = (-1) * (weeknow + 1);
@@ -297,10 +297,17 @@ namespace LK.Util
                 return (weeks + 1);
         }
 
-        public static DateTime GetStandardTime(this DateTime dt, int blockSec)
+        /// <summary>
+        /// 取得正規化後的時間，假設正規化1分鐘，17:48:12就會正規化成17:49:00
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="blockSec">正規化的block</param>
+        /// <param name="isForeward">是否要正規化成前置時間，即17:48:00</param>
+        /// <returns></returns>
+        public static DateTime GetStandardTime(this DateTime time, int blockSec, bool isForeward = false)
         {
-            int timeBlock = ((int)dt.TimeOfDay.TotalSeconds / blockSec) + 1;
-            return dt.Date.AddSeconds(timeBlock * blockSec);
+            int timeBlock = ((int)time.TimeOfDay.TotalSeconds / blockSec) + (isForeward ? 0 : 1);
+            return time.Date.AddSeconds(timeBlock * blockSec);
         }
     }
 

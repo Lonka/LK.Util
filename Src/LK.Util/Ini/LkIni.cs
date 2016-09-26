@@ -238,7 +238,7 @@ namespace LK.Util
                         }
                     }
 
-                    if (line.StartsWith("[" + section) && line.EndsWith("]"))
+                    if (line.StartsWith("[") && line.EndsWith("]") && line.TrimStart('[').TrimEnd(']').ToUpper().Equals(section.ToUpper()))
                     {
                         isSection = true;
                     }
