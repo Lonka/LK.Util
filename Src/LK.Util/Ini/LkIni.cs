@@ -162,12 +162,22 @@ namespace LK.Util
             return (result);
         }
 
+        public static bool WriteProfileSection(string section, string value)
+        {
+            return WriteProfileSection(IniPath, section, value);
+        }
+
         public static bool WriteProfileString(string iniFile, string section, string key, string value)
         {
             bool result = false;
             if (WritePrivateProfileString(section, key, value, iniFile) > 0)
                 result = true;
             return (result);
+        }
+
+        public static bool WriteProfileString(string section, string key, string value)
+        {
+            return WriteProfileString(IniPath, section, key, value);
         }
 
         /// <summary>
