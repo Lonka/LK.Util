@@ -117,6 +117,7 @@
     <Compile Include="MessageBox\LkMsgBox.cs" />
     <Compile Include="MessageBox\MessageModes.cs" />
     <Compile Include="MessageBox\MsgBox.cs" />
+    <Compile Include="Utilities\LkObjectUtil.cs" />
     <Compile Include="Utilities\LkStringUtil.cs" />
     <Compile Include="Utilities\Compare\Type\CompareType.cs" />
     <Compile Include="Validation\LkValidation.cs" />
