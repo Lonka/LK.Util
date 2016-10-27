@@ -11,8 +11,8 @@ namespace LK.Util
     /// </summary>
     public class LkReflectModel
     {
-        public Assembly AssemblyDll { get; set; }
-        public Type ClassType { get; set; }
+        public Assembly Assembly { get; set; }
+        public Type Class { get; set; }
 
         public object ClassInstance { get; set; }
     }

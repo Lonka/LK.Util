@@ -136,6 +136,33 @@ namespace ForTest
             //    parameters = new object[] { "lonka", "abc" };
             //    LkReflector.ExecuteMethod("WriteLog2", instance, parameters, out value);
             //}
+            string url = "http://172.16.22.112:916/test.asmx";
+            object value;
+
+            LkReflectModel instance;
+            if(LkReflector.GetWebServiceInstance(url, null, out instance))
+            {
+                if(LkReflector.ExecuteMethod("HelloWorld", instance, out value))
+                {
+
+                }
+                if(LkReflector.ExecuteMethod("GetData",instance, new object[1] { DateTime.Now },out value))
+                {
+
+                }
+            }
+
+            if(LkReflector.ExecuteWebServiceMethod(url,null, "HelloWorld", null, out value))
+            {
+
+            }
+
+
+            if (LkReflector.ExecuteWebServiceMethod(url, null, "GetData", new object[1] { DateTime.Now }, out value))
+            {
+
+            }
+
             #endregion
 
             #region 密碼
@@ -194,13 +221,13 @@ namespace ForTest
             #endregion
 
             #region INI
-            LkIni.IniPath = AppDomain.CurrentDomain.BaseDirectory + "setting.ini";
+            //LkIni.IniPath = AppDomain.CurrentDomain.BaseDirectory + "setting.ini";
             //string ii = LkIni.GetProfileString("test", "a", "AAA");
             //int oo = LkIni.GetProfileInt("test", "b", 0);
             //List<string> ojioj = LkIni.GetSections();
             //List<string> aerser = LkIni.GetKeys("test1");
             //Dictionary<string, string> aeersrrser = LkIni.GetKeyValues("test1");
-            Dictionary<string, string> allKeys = LkIni.GetKeyValues("Migrate Task ROUTE");
+            //Dictionary<string, string> allKeys = LkIni.GetKeyValues("Migrate Task ROUTE");
             #endregion
 
             #region SecurePass
@@ -264,20 +291,20 @@ namespace ForTest
             //object oooieie;
             //LkDataSerializer.ObjectDeserialize("test", out oooieie);
 
-            DataTable iojio = new DataTable();
-            iojio.Columns.Add("A");
-            iojio.Columns.Add("B");
-            DataRow dr = iojio.NewRow();
-            dr["A"] = 1;
-            dr["B"] = 2;
-            iojio.Rows.Add(dr);
-            LkDataSerializer.DataTableSerialize(Path.Combine(Path.Combine("mes_1.ini", "MT1"), "abc"), iojio);
-            //LkDataSerializer.DataTableSerialize("123", iojio);
-            DataTable oiserjiso;
-            LkDataSerializer.DataTableDeserialize(Path.Combine(Path.Combine("mes_1.ini", "MT1"), "abc"), out oiserjiso);
+            //DataTable iojio = new DataTable();
+            //iojio.Columns.Add("A");
+            //iojio.Columns.Add("B");
+            //DataRow dr = iojio.NewRow();
+            //dr["A"] = 1;
+            //dr["B"] = 2;
+            //iojio.Rows.Add(dr);
+            //LkDataSerializer.DataTableSerialize(Path.Combine(Path.Combine("mes_1.ini", "MT1"), "abc"), iojio);
+            ////LkDataSerializer.DataTableSerialize("123", iojio);
+            //DataTable oiserjiso;
+            //LkDataSerializer.DataTableDeserialize(Path.Combine(Path.Combine("mes_1.ini", "MT1"), "abc"), out oiserjiso);
 
-            string oojseirosj = @"D:\Project\Delta\prj-cn-csrgc\trunk\4-Development\40-Source\Window Service\DeltaBEMS System Service\DeltaBEMSSystemService\bin\Debug\RetryFiles\mes_1.ini\Migrate Task 1\20160921155819036";
-            LkDataSerializer.DataTableDeserialize(oojseirosj, out oiserjiso);
+            //string oojseirosj = @"D:\Project\Delta\prj-cn-csrgc\trunk\4-Development\40-Source\Window Service\DeltaBEMS System Service\DeltaBEMSSystemService\bin\Debug\RetryFiles\mes_1.ini\Migrate Task 1\20160921155819036";
+            //LkDataSerializer.DataTableDeserialize(oojseirosj, out oiserjiso);
 
             #endregion
 

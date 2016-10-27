@@ -50,7 +50,14 @@ namespace LK.Util
             }
             catch
             {
-                result = Enum.Parse(enumType, defaultValue);
+                try
+                {
+                    result = Enum.Parse(enumType, defaultValue);
+                }
+                catch
+                {
+                    result = null;
+                }
             }
             return result;
         }
