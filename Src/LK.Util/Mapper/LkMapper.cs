@@ -6,25 +6,36 @@ namespace LK.Util
 {
     public class LkMapper
     {
-        public static T CreateClassFromRow<T>(DataRow dr) where T : new()
+        public static T CreateClassFromRow<T>(DataRow dr, bool ignoreCase = true, bool repleaseUnderLine = true) where T : new()
         {
             T item = new T();
-            SetItemFromRow(item, dr);
+            SetItemFromRow(item, dr, ignoreCase, repleaseUnderLine);
             return item;
         }
 
-        public static void SetItemFromRow<T>(T item, DataRow dr) where T : new()
+        public static void SetItemFromRow<T>(T item, DataRow dr, bool ignoreCase = true, bool repleaseUnderLine = true) where T : new()
         {
+            BindingFlags flags = new BindingFlags();
+            if (ignoreCase)
+            {
+                flags = BindingFlags.SetProperty | BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance;
+            }
+
             foreach (DataColumn col in dr.Table.Columns)
             {
-                PropertyInfo propertyInfo = item.GetType().GetProperty(col.ColumnName);
+                string colName = col.ColumnName;
+                if (repleaseUnderLine)
+                {
+                    colName = colName.Replace("_", string.Empty);
+                }
+                PropertyInfo propertyInfo = item.GetType().GetProperty(colName, flags);
                 if (propertyInfo != null && dr[col] != DBNull.Value)
                 {
 
-                    if( propertyInfo.PropertyType == typeof(int))
+                    if (propertyInfo.PropertyType == typeof(int))
                     {
                         int intValue;
-                        if(!int.TryParse(dr[col].ToString(),out intValue))
+                        if (!int.TryParse(dr[col].ToString(), out intValue))
                         {
                             intValue = int.MaxValue;
                         }
