@@ -23,10 +23,6 @@ namespace LK.Util
     //}
     //---------------------------
 
-
-
-
-
     public class LkReflector
     {
         /// <summary>
@@ -67,7 +63,14 @@ namespace LK.Util
             return result;
         }
 
-        public static bool GetWebServiceInstance(string url, string[] assemblyReferences, out LkReflectModel output)
+        /// <summary>
+        /// 取得webservice instance
+        /// </summary>
+        /// <param name="url">url+?wsdl</param>
+        /// <param name="assemblyReferences"></param>
+        /// <param name="output"></param>
+        /// <returns></returns>
+        public static bool GetWebServiceInstance(string url, string[] assemblyReferences, out LkReflectModel output, string userName = "", string password = "")
         {
             //http://www.codeproject.com/Articles/18950/Dynamic-Discovery-and-Invocation-of-Web-Services
             //https://dotblogs.com.tw/jimmyyu/archive/2009/04/22/8139.aspx
@@ -80,11 +83,15 @@ namespace LK.Util
             bool result = false;
             try
             {
-                WebRequest webRequest = WebRequest.Create(url + "?WSDL");
-                
+                WebRequest webRequest = WebRequest.Create(url);
+
                 //有要權限的話要加下面
                 //webRequest.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                //webRequest.PreAuthenticate = true;
+                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password))
+                {
+                    webRequest.Credentials = new NetworkCredential(userName, password);
+                    webRequest.PreAuthenticate = true;
+                }
                 Stream requestStream = webRequest.GetResponse().GetResponseStream();
                 // Get a WSDL file describing a service
                 //ServiceDescription类提供一种方法，以创建和格式化用于描述 XML Web services 的有效的 Web 服务描述语言 (WSDL) 文档文件，该文件是完整的，具有适当的命名空间、元素和特性。 无法继承此类。

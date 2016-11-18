@@ -309,6 +309,21 @@ namespace LK.Util
             int timeBlock = ((int)time.TimeOfDay.TotalSeconds / blockSec) + (isForeward ? 0 : 1);
             return time.Date.AddSeconds(timeBlock * blockSec);
         }
+
+        /// <summary>
+        /// String -> DateTime
+        /// </summary>
+        /// <param name="dtStr"></param>
+        /// <returns></returns>
+        public static DateTime? GetDatetimeFromString(string dtStr, string format)
+        {
+            DateTime result;
+            if (!DateTime.TryParseExact(dtStr, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+            {
+                return null;
+            }
+            return result;
+        }
     }
 
 }

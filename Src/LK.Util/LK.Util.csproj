@@ -149,8 +149,7 @@
   <PropertyGroup>
     <PostBuildEvent>del *.pdb
 del *.xml
-COPY /Y "$(TargetDir)*.*" "$(ProjectDir)..\..\Release\Source"
-</PostBuildEvent>
+COPY /Y "$(TargetDir)*.*" "$(ProjectDir)..\..\Release\Source"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

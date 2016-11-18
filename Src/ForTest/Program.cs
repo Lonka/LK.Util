@@ -8,6 +8,9 @@ using System.Data.Common;
 using System.IO;
 using System.Globalization;
 
+using System.Xml.Linq;
+using System.Xml;
+
 namespace ForTest
 {
     class Program
@@ -136,17 +139,36 @@ namespace ForTest
             //    parameters = new object[] { "lonka", "abc" };
             //    LkReflector.ExecuteMethod("WriteLog2", instance, parameters, out value);
             //}
-            string url = "http://172.16.22.112:916/test.asmx";
+            //string url = "http://172.16.22.112:916/test.asmx";
+            string url = "http://210.22.80.17:50000/dir/wsdl?p=sa/a886e25e1f083e96ae1c381a3af3cd40";
             object value;
 
             LkReflectModel instance;
             if(LkReflector.GetWebServiceInstance(url, null, out instance))
             {
-                if(LkReflector.ExecuteMethod("HelloWorld", instance, out value))
-                {
+                
+                var doc = new XDocument(
+                    new XElement("DT_BJNY_Out_Req",
+                        new XElement("IN_DATE",DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"))
+                        )
+                    );
 
-                }
-                if(LkReflector.ExecuteMethod("GetData",instance, new object[1] { DateTime.Now },out value))
+
+
+                var ii = new DT_BJNY_Out_Req();
+                ii.IN_DATE = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+
+
+                var xmlDoc = new XmlDocument();
+                var jio = xmlDoc.CreateElement("DT_BJNY_Out_Req");
+                xmlDoc.AppendChild(jio);
+                xmlDoc.CreateElement("DT_BJNY_Out_Req");
+                XmlElement e = xmlDoc.CreateElement("IN_DATE");
+                e.InnerText = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                jio.AppendChild(e);
+
+                if (LkReflector.ExecuteMethod("SI_BJNY_Out_Syn", instance, new object[1] { xmlDoc }, out value))
                 {
 
                 }
@@ -344,5 +366,12 @@ namespace ForTest
             public int A { get; set; }
             public int B { get; set; }
         }
+
+
+    }
+
+   public  class DT_BJNY_Out_Req
+    {
+        public string IN_DATE { get; set; }
     }
 }

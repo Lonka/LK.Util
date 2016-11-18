@@ -56,6 +56,7 @@ namespace LK.Util
                 {
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
+                    dbCommand.CommandTimeout = 300;
                     DbDataReader dbDataReader = dbCommand.ExecuteReader(CommandBehavior.CloseConnection);
                     if (dbDataReader.HasRows)
                     {
@@ -84,6 +85,7 @@ namespace LK.Util
                 {
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
+                    dbCommand.CommandTimeout = 300;
                     for (int i = 0; i < parms.Count; i++)
                     {
                         DbParameter dbParms = dbCommand.CreateParameter();
@@ -121,6 +123,7 @@ namespace LK.Util
                 {
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
+                    dbCommand.CommandTimeout = 300;
                     DbDataAdapter dbDataAdapter = dbProviderFactory.CreateDataAdapter();
                     dbDataAdapter.SelectCommand = dbCommand;
                     dbDataAdapter.Fill(result);
@@ -142,6 +145,7 @@ namespace LK.Util
                 {
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
+                    dbCommand.CommandTimeout = 300;
                     for (int i = 0; i < parms.Count; i++)
                     {
                         DbParameter dbParms = dbCommand.CreateParameter();
@@ -175,6 +179,7 @@ namespace LK.Util
                     dbCommand.CommandType = CommandType.StoredProcedure;
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = spName;
+                    dbCommand.CommandTimeout = 300;
                     for (int i = 0; i < parms.Count; i++)
                     {
                         DbParameter dbParms = dbCommand.CreateParameter();
@@ -212,7 +217,6 @@ namespace LK.Util
             return result;
         }
 
-
         public void ExecuteSQL(string strSQL, bool isTransaction = true)
         {
             using (DbConnection dbConnection = dbProviderFactory.CreateConnection())
@@ -229,6 +233,7 @@ namespace LK.Util
                     DbCommand dbCommand = dbProviderFactory.CreateCommand();
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
+                    dbCommand.CommandTimeout = 300;
                     if (isTransaction)
                     {
                         dbCommand.Transaction = dbTransaction;
@@ -268,6 +273,7 @@ namespace LK.Util
                     DbCommand dbCommand = dbProviderFactory.CreateCommand();
                     dbCommand.Connection = dbConnection;
                     dbCommand.CommandText = strSQL;
+                    dbCommand.CommandTimeout = 300;
                     if (isTransaction)
                     {
                         dbCommand.Transaction = dbTransaction;
